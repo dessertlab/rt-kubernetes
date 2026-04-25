@@ -1,2 +1,6 @@
 nodeSelector:
   kubernetes.io/hostname: dessertw3
+
+zipkin:
+  extraEnv:
+    JAVA_OPTS: "-Xms2g -Xmx3g -XX:+ExitOnOutOfMemoryError"

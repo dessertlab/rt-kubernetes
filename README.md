@@ -23,3 +23,16 @@ We strongly invite users to consult the docs contained in each of the project fo
 
 This repository includes examples and experiments designed to co-operate with a patched version of **Knative**, a serverless computing platform based on kubernetes that implements the **function-as-a-service** paradigm. Our forked knative repository including the patched version of the platfrom, developed to co-operate with PREEMPT-FaaS, can be found at:
 https://github.com/dessertlab/knative-crd-scaled. Follow the instructions in the repository docs to install our Knative version.
+
+## Prerequisites
+The project requires a set of tools and platforms to operate. We link below the official docs of said tools that will guide the user through the installation process.
+
+**Note**: Refer to the docs found in this repository folders for more detail on the tools version number required.
+
+- Set up a Kubernetes cluster: https://kubernetes.io/docs/home/
+- Knative custom version: https://github.com/dessertlab/knative-crd-scaled
+- Helm: https://helm.sh/it/docs/
+- kubectl compatible with the Kubernetes version installed: https://kubernetes.io/docs/home/
+- Docker: https://docs.docker.com/
+
+ 

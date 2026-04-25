@@ -67,12 +67,6 @@ config:
       tls:
         insecure: true
 
-    # Zipkin endpoint for logs
-    # zipkin:
-    #   endpoint: http://zipkin.observability.svc.cluster.local:9411/api/v2/spans
-    #   format: json
-    #   default_service_name: unknown-service
-
   service:
     pipelines:
       metrics: null
@@ -85,12 +79,6 @@ config:
         exporters:
           - otlphttp
       traces: null
-      #  receivers:
-      #     - otlp
-      #   processors:
-      #     - batch
-      #   exporters:
-      #     - zipkin
 
 ports:
   jaeger-compact:

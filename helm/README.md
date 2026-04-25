@@ -4,9 +4,11 @@ This Helm Chart allows you to quickly configure and install **PREEMPT-FaaS** in 
 
 ## Prerequisites (recommended)
 
-- Kubernetes cluster v1.29+ with admin access
-- Helm 3.20+
-- A control-plane node that allows Pod scheduling (only single-node control plane has been tested)
+- A **Kubernetes cluster** v1.29+ with admin access
+- **Helm** 3.20+
+- A **control-plane node** that allows Pod scheduling (only single-node control plane has been tested)
+
+Please refer to the main project docs for prerequisites installation docs links: [README.md](../README.md).
 
 ## Installed Components
 
@@ -16,7 +18,7 @@ The Chart installs the following components:
 - **Service Account**: dedicated service account for the controller;
 - **ClusterRole and ClusterRoleBinding**: grant permissions to manage RTResources and Pods to the controller Service Account;
 - **ConfigMap**: the controller configuration encoded in Container Environment Variables;
-- **StatefulSet**: PREEMPT-FaaS deploy as a single-replica StatefulSet.
+- **StatefulSet**: PREEMPT-FaaS deploy as a *single-replica StatefulSet*.
 
 ## Configuration
 
@@ -30,6 +32,37 @@ The [`values.yaml`](values.yaml) file contains all configurable parameters of th
 | `preempt_k8s.general.namespace` | Namespace where the controller will be deployed | `realtime` |
 
 ### Pod Configuration
+
+We deploy the controller as a Pod in the control-plane node to guarantee the best performance when interacting with **Kube-apiserver**. The following parameters ensure the controller can be scheduled on such node:
+
+```yaml
+nodeSelector:
+  node-role.kubernetes.io/control-plane: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Exists"
+      effect: "NoSchedule"
+```
+
+Since the control plane configuration may differ, launch the following command to retrieve information on you control plane tolerations and labels:
+
+```bash
+# Check control-plane node labels
+kubectl get nodes --show-labels | grep -E "<your-control-plane-node-name>"|"node-role.kubernetes.io/control-plane"
+
+# If the control-plane node has not the "node-role.kubernetes.io/control-plane" label, add it, or use in the manifest a label already available for your node that univocly identifies it in the cluster.
+
+# Check all control-plane node labels
+kubectl get nodes --show-labels
+
+# Add a custom label to the control-plane node (if needed)
+kubectl label node <control-plane-node-name> node-role.kubernetes.io/control-plane=""
+
+# Check control-plane node tolerations, if the tolarations appear to be different, update the statefulset manifest with the correct tolerations
+kubectl describe node <control-plane-node-name> | grep "Taints"
+```
+
+If you require to update the controller StatefulSet manifest, edit the [`statefulset.yaml`](../helm/templates/controller-deploy/statefulset.yaml) in your Helm Chart, or, for manual deploy, in the [`statefulset.yaml`](../resources/controller-deploy/statefulset.yaml).
 
 #### Restart Policy
 

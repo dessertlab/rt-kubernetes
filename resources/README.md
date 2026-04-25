@@ -23,9 +23,11 @@ resources/
 
 ## Prerequisites (recommended)
 
-- Kubernetes cluster v1.29+ with admin access
-- `kubectl` configured to access your cluster
-- A control-plane node that allows Pod scheduling (only single-node control plane has been tested)
+- A **Kubernetes cluster** v1.29+ with admin access
+- **`kubectl`** configured to access your cluster
+- A **control-plane node** that allows Pod scheduling (only single-node control plane has been tested)
+
+Please refer to the main project docs for prerequisites installation docs links: [README.md](../README.md).
 
 ## Installation
 

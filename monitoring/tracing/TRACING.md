@@ -6,19 +6,19 @@ Kubernetes **tracing** features allow to follow the request path a cluster when 
 
 The tracing features deliver data with **nanosecond precision**, even though we only leveraged the **miliiisecond precision**.
 
-**Note**: the tracing feature does not grant any information on the **payload** of the requests collected, only highlighting the **entities** involved and the **metadata** necessary to identify the **resources** affected by these requests
+**Note**: the tracing feature does not grant any information on the **payload** of the requests collected, only highlighting the **entities** involved and the **metadata** necessary to identify the **resources** affected by these requests.
 
 For further information, please refer to the K8s official documentation: <https://kubernetes.io/blog/2021/09/03/api-server-tracing/>
 
 ## Enable Kubernetes Tracing
 
-Follow the following steps to enable the trcing feature in your cluster for both the Kue-apiserver and Kube-etcd, assuming the Kube-apiserver is deployed as a **static pod**.
+Follow the following steps to enable the tracing feature in your cluster for both the **Kube-apiserver** and **Kube-etcd**, assuming they are deployed as **static pods** (i.e., manifest files constantly monitored by the control plane Kubelet).
 
 ### Tracing Configuration
 
 We must first create the **tracing configuration**.
 
-Create a ***tracing-config.yaml*** file as follows:
+Create a **`tracing-config.yaml`** file as follows:
 
 ```yaml
 apiVersion: apiserver.config.k8s.io/v1beta1
@@ -29,23 +29,26 @@ samplingRatePerMillion: 1000000
 
 The *endpoint* must point to the the **OpenTelemetry Collector service** deployed in the cluster. You can try to rely on **DNS resolution**, but, in case it should fail at this level, insert the **K8s service IP address**.
 
-The *samplingRatePerMillion* is set to *100%*.
-
-Copy this file in your control plane. The usual path would be the following:
+To discover the OpenTelemetry Collector service IP address, run the following command:
 
 ```bash
-/etc/kubernetes/tracing-config.yaml
+kubectl get svc -n <opentelemetry-collector-namespace> | grep "<opentelemetry-collector-service-name>"
 ```
 
-### Kube-etcd Deployment
+The `samplingRatePerMillion` is set to `100%`.
 
-Now modify your Kube-etcd manifest, usually in:
+Copy this file in your control plane. The usual path would be the following: `/etc/kubernetes/tracing-config.yaml`.
 
 ```bash
-/etc/kubernetes/manifests/etcd.yaml
+# Copy the tracing configuration file to the correct path
+mv ./tracing-config.yaml /etc/kubernetes/tracing-config.yaml
 ```
 
-Add the following command flags:
+### Kube-etcd Customization
+
+Now modify your Kube-etcd manifest, usually in: `/etc/kubernetes/manifests/etcd.yaml`.
+
+Add the following command flags (replace the placeholder values with your actual configuration):
 
 ```yaml
 - command:
@@ -60,15 +63,11 @@ At this level, rely on **IP addresses** and not **DNS resolution**.
 
 Now save the file and the configuration will automatically apply.
 
-### Kube-apiserver Deployment
+### Kube-apiserver Customization
 
-Now modify your kube-apiserver manifest, usually in:
+Now modify your kube-apiserver manifest, usually in: `/etc/kubernetes/manifests/kube-apiserver.yaml`.
 
-```bash
-/etc/kubernetes/manifests/kube-apiserver.yaml
-```
-
-Add the following command flags:
+Add the following command flags (replace the placeholder values with your actual configuration):
 
 ```yaml
 - command:
@@ -78,7 +77,7 @@ Add the following command flags:
     - --v=6
 ```
 
-Add the following volume mounts:
+Add the following volume mounts (replace the placeholder values with your actual configuration):
 
 ```yaml
 - volumeMounts:
@@ -88,7 +87,7 @@ Add the following volume mounts:
       readOnly: true
 ```
 
-Add the following volumes:
+Add the following volumes (replace the placeholder values with your actual configuration):
 
 ```yaml
 - volumes:
