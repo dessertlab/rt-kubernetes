@@ -2,6 +2,17 @@
 
 This folder contains the benchmarks retrieved from the vSwarm suite, along with the [`invoker`](./invoker) tool employed as load generator.
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Purpose of the Tests](#purpose-of-the-tests)
+- [Experimental Setup](#experimental-setup)
+- [Experiment Workflow](#experiment-workflow)
+- [Data Retrieved](#data-retrieved)
+  - [Orchestration Events](#orchestration-events)
+  - [End-to-End Metrics](#end-to-end-metrics)
+- [Sensitivity Analysis](#sensitivity-analysis)
+
 ## Prerequisites
 - A Kubernetes cluster with PREEMPT-FaaS installed and configured
 - The experiment volume provisioned and accessible (see [k8s-results-store](../k8s-results-store/))
@@ -66,3 +77,31 @@ imagePullPolicy: Never
 11. `setup-invoker-pods.sh` can be employed to clean up the enviroment from all generated resources.
 
 12. Users can use one of the pods in the [test-pods](../test-pods/) folder to access the experiment results and perform any additional analysis.
+
+## Data Retrieved
+
+We define the events retrieved from monitored data as follows.
+
+### Orchestration Events
+
+- **Scale-Up**. The event at which the Knative autoscaler updates the replicas field of the Deployment or RTResource. A single iteration may include multiple scale-up events per service.
+
+- **Starts Processing**. The event at which the controller begins handling a scale-up event, identified by its first interaction with the kube-apiserver. For the Kube-Manager controller, this corresponds to the creation of the first pod in the new replica set. For PREEMPT-FaaS, it coincides with updating the RTResource status condition to Progressing.
+
+- **Pods Created**. The event at which all required pod objects for a scale-up are successfully created in the cluster. A pod is considered “created” once its API object exists, independently of container startup. For single-replica scale-ups under Kube-Manager, this event coincide with Starts Processing.
+
+- **Pods Started**. The event at which all required pods are running and ready to receive traffic. Although this stage depends on the Kubelet behavior (which is outside the scope of this work), faster orchestration can advance pod scheduling and startup. Nevertheless, Kubelet queueing and internal mechanisms may still introduce variability.
+
+### End-to-End Metrics
+
+- **Latency**. The time between sending a request to the service and receiving a response.
+
+- **Throughput**. The number of RPS successfully processed by the service during the experiment duration.
+
+- **Lost Requests**. The number of requests sent by the invoker that the service was not able to process, either due to timeouts or the service being still scaled-down-to-zero.
+
+- **Completed Requests**. The number of requests sent by the invoker that the service was able to process, receiving a response before the timeout.
+
+## Sensitivity Analysis
+
+In our evaluation we performed a sensitivity analysis varying the number of interfering resources per burst. We tested `15`, `30`, and `45` resources per burst. More details on the specific experimental configuration in each benchmark folder.
