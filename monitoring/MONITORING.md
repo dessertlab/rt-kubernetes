@@ -11,6 +11,7 @@ To deploy the monitoring infrastructure, you need:
 - **Helm** 3.20+
 - A **control-plane node** that allows Pod scheduling (only single-node control plane has been tested)
 - A dedicated **worker node** hosting the monitoring services (optional but recommended for performance reasons)
+- A **volume provisioner**; if your cluster is not equipped with a an already installed one, please follow the guide in [LONGHORN.md](../experiments/k8s-results-store/LONGHORN.md). The guide is also useful to set up a volume emplyed in these repository experiments, whether it is istantiated with **Longhorn** or not.
 
 Please refer to the main project docs for prerequisites installation links: [README.md](../README.md).
 
