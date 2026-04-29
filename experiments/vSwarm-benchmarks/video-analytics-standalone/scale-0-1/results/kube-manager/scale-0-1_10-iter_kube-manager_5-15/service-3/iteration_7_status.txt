@@ -1,0 +1,8 @@
+================================================
+vSwarm Video Analytics Standalone Benchmark Status - Iteration 7
+================================================
+Issued: 361
+Completed: 121
+Target RPS: 12
+Real RPS: 4.03
+================================================

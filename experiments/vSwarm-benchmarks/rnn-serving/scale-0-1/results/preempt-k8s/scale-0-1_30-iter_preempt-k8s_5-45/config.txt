@@ -1,0 +1,14 @@
+================================================
+vSwarm RNN Benchmark - Test Configuration
+================================================
+Experiment Name: scale-0-1_30-iter_preempt-k8s_5-45
+Test Type: RTResource
+Number of Services: 5
+RPS per service: 50
+Timeout: 40 seconds
+Duration: 30 seconds
+Iterations: 30
+Number of Interfering Resources: 45
+Base Scale per service: 0
+Scale-Ups Allowed per service: 1
+================================================

@@ -1,0 +1,6 @@
+Service,Mean Latencies [ms],Max Latencies [ms],Mean Lost Requests,Max Lost Requests,Mean Completed Requests,Max Completed Requests,Mean Real RPS,Max Real RPS,Starts Processing Delay Mean [ms],Starts Processing Delay Max [ms],Pod Creation Delay Mean [ms],Pod Creation Delay Max [ms],Pod Startup Delay Mean [ms],Pod Startup Delay Max [ms]
+service-1,334.94,4246.73,248.30,351,112.70,214,3.76,7.13,147.64,276.54,313.98,479.01,4089.21,4761.60
+service-2,328.09,4188.22,237.60,272,123.40,203,4.12,6.77,135.20,224.25,290.82,409.30,3898.53,4725.95
+service-3,266.10,3751.79,235.80,254,125.20,139,4.17,4.63,123.53,343.42,277.97,459.70,3772.37,4563.52
+service-4,289.62,3872.50,234.00,267,127.00,199,4.23,6.63,151.80,349.14,323.61,564.57,3699.13,4874.77
+service-5,263.50,3706.99,224.40,257,136.60,213,4.55,7.10,134.68,191.99,292.25,415.51,3695.79,4218.41
