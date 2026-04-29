@@ -1,5 +1,0 @@
-time="2026-03-09T15:42:20.139014367Z" level=info msg="Reading the endpoints from the file: endpoints.json"
-time="2026-03-09T15:42:50.166923446Z" level=info msg="Issued / completed requests: 1450, 1450"
-time="2026-03-09T15:42:50.167048823Z" level=info msg="Real / target RPS: 48.33 / 50"
-time="2026-03-09T15:42:50.167077405Z" level=info msg="Experiment finished!"
-time="2026-03-09T15:42:50.167105941Z" level=info msg="The measured latencies are saved in rps48.33_iteration_6"
