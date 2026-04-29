@@ -57,14 +57,14 @@ We first give you a quick guide on how to run the experiments. Then, we will lis
 ssh <worker-1-user>@<worker-1-ip>
 
 # Pull the database image
-crictl pull docker.io/vhiveease/mongodb
+sudo crictl pull docker.io/vhiveease/mongodb
 
 # SSH into Worker Node 2
 ssh <worker-2-user>@<worker-2-ip>
 
 # Pull the benchmark service image
-crictl pull docker.io/vhiveease/relay:latest
-crictl pull docker.io/vhiveease/video-analytics-standalone-python:latest
+sudo crictl pull docker.io/vhiveease/relay:latest
+sudo crictl pull docker.io/vhiveease/video-analytics-standalone-python:latest
 ```
 
 ### 2. Deploy the database

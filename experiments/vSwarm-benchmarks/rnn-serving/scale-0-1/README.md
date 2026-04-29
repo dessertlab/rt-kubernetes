@@ -57,8 +57,8 @@ We first give you a quick guide on how to run the experiments. Then, we will lis
 ssh <worker-2-user>@<worker-2-ip>
 
 # Pull the benchmark service image
-crictl pull docker.io/vhiveease/relay:latest
-crictl pull docker.io/vhiveease/rnn-serving:latest
+sudo crictl pull docker.io/vhiveease/relay:latest
+sudo crictl pull docker.io/vhiveease/rnn-serving:latest
 ```
 
 ### 2. Setup Invoker Pods and Service Manifests
