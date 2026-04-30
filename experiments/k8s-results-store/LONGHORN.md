@@ -66,6 +66,7 @@ A Retain volume will still exist even with no pods mounting it.
 To create a new volume, connect first to the dashboard:
 
 ```bash
+# If you are in an ssh session, make sure to forward the port to your local machine!
 kubectl port-forward svc/longhorn-frontend -n longhorn-system 8080:80
 ```
 
